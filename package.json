@@ -1,0 +1,66 @@
+{
+  "name": "kaizen-board",
+  "version": "1.0.0",
+  "productName": "Kaizen Board",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac --universal",
+    "build:arm64": "electron-builder --mac --arm64",
+    "build:x64": "electron-builder --mac --x64"
+  },
+  "keywords": [],
+  "author": "Kaizen Board",
+  "license": "ISC",
+  "description": "Minimalist Kaizen board for macOS",
+  "devDependencies": {
+    "electron": "^41.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.kaizenboard.app",
+    "productName": "Kaizen Board",
+    "copyright": "Copyright © 2025 Kaizen Board",
+    "files": [
+      "main.js",
+      "preload.js",
+      "app.js",
+      "index.html",
+      "style.css",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["universal"]
+        },
+        {
+          "target": "zip",
+          "arch": ["universal"]
+        }
+      ],
+      "darkModeSupport": true,
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": null,
+      "entitlementsInherit": null
+    },
+    "dmg": {
+      "title": "Kaizen Board",
+      "window": {
+        "width": 540,
+        "height": 380
+      },
+      "contents": [
+        { "x": 130, "y": 220, "type": "file" },
+        { "x": 410, "y": 220, "type": "link", "path": "/Applications" }
+      ]
+    },
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    }
+  }
+}

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaizen Board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Drag ghost -->
+  <div id="drag-ghost" class="drag-ghost" aria-hidden="true"></div>
+
+  <!-- App shell -->
+  <div class="app">
+
+    <!-- Titlebar -->
+    <header class="titlebar">
+      <div class="titlebar-drag-region"></div>
+      <div class="titlebar-left">
+        <!-- Logo SVG -->
+        <svg class="logo" viewBox="0 0 28 28" fill="none" aria-label="Kaizen Board" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="10" height="10" rx="2" fill="var(--accent)"/>
+          <rect x="16" y="2" width="10" height="10" rx="2" fill="var(--col-todo)"/>
+          <rect x="2" y="16" width="10" height="10" rx="2" fill="var(--col-done)"/>
+          <rect x="16" y="16" width="10" height="10" rx="2" fill="var(--text-faint)" opacity="0.4"/>
+        </svg>
+
+        <button class="btn-icon btn-add-inline" id="btn-add-card" title="New card (N)" data-testid="button-add-card">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="10" y1="4" x2="10" y2="16"/><line x1="4" y1="10" x2="16" y2="10"/></svg>
+        </button>
+      </div>
+      <div class="titlebar-right">
+        <!-- Retro button -->
+        <button class="btn-retro" id="btn-retro" title="Retrospective" data-testid="button-retro">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,12 6,8 9,10 14,4"/>
+            <polyline points="11,4 14,4 14,7"/>
+          </svg>
+          <span>Retro</span>
+        </button>
+        <!-- Tag filter -->
+        <div class="tag-filter" id="tag-filter">
+          <button class="tag-filter-btn" id="tag-filter-btn" title="Filter by tag" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4h12M4 8h8M6 12h4"/>
+            </svg>
+            <span class="tag-filter-label" id="tag-filter-label">Tags</span>
+          </button>
+          <div class="tag-filter-dropdown" id="tag-filter-dropdown" aria-hidden="true"></div>
+        </div>
+        <!-- Priority filter chips -->
+        <div class="priority-filter" id="priority-filter" role="group" aria-label="Filter by priority">
+          <button class="pf-chip" data-pf="high"  title="High only">HIGH</button>
+          <button class="pf-chip" data-pf="normal" title="Normal only">●</button>
+          <button class="pf-chip" data-pf="low"   title="Low only">LOW</button>
+        </div>
+        <button class="btn-deadlined" id="btn-deadlined" title="Highlight overdue" data-testid="button-deadlined">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="12" height="12" rx="2"/>
+            <line x1="5" y1="1" x2="5" y2="3.5"/>
+            <line x1="11" y1="1" x2="11" y2="3.5"/>
+            <line x1="2" y1="6" x2="14" y2="6"/>
+            <line x1="5.5" y1="9" x2="10.5" y2="13"/>
+            <line x1="10.5" y1="9" x2="5.5" y2="13"/>
+          </svg>
+          <span class="btn-deadline-today-label">DeadLined</span>
+        </button>
+        <button class="btn-deadline-today" id="btn-deadline-today" title="Deadline today" data-testid="button-deadline-today">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="12" height="12" rx="2"/>
+            <line x1="5" y1="1" x2="5" y2="3.5"/>
+            <line x1="11" y1="1" x2="11" y2="3.5"/>
+            <line x1="2" y1="6" x2="14" y2="6"/>
+            <circle cx="8" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+          </svg>
+          <span class="btn-deadline-today-label">DeadLine Today</span>
+        </button>
+
+        <button class="btn-icon" id="btn-search" title="Search cards (/)" data-testid="button-search">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <circle cx="8.5" cy="8.5" r="5"/>
+            <line x1="13" y1="13" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <button class="btn-icon" id="btn-settings" title="Settings" data-testid="button-settings">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="10" cy="10" r="3"/>
+            <path d="M10 1v2M10 17v2M1 10h2M17 10h2M3.22 3.22l1.42 1.42M15.36 15.36l1.42 1.42M3.22 16.78l1.42-1.42M15.36 4.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Search bar -->
+    <div class="search-bar" id="search-bar" aria-hidden="true">
+      <div class="search-bar-inner">
+        <svg class="search-bar-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="8.5" cy="8.5" r="5"/><line x1="13" y1="13" x2="18" y2="18"/>
+        </svg>
+        <input id="search-input" class="search-input" type="text" placeholder="Search cards…" autocomplete="off" />
+        <kbd class="search-kbd">Esc</kbd>
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </div>
+
+    <!-- Board -->
+    <main class="board" id="board">
+      <!-- Columns rendered by JS -->
+    </main>
+
+  </div>
+
+  <!-- Card modal -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-label">
+      <div class="modal-header">
+        <input id="modal-title" class="modal-title-input" type="text" placeholder="Card title…" maxlength="120" data-testid="input-card-title" />
+        <button class="btn-icon modal-close" id="modal-close" data-testid="button-modal-close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </button>
+      </div>
+      <textarea id="modal-body" class="modal-body" placeholder="Notes, links, context…" rows="3" data-testid="textarea-card-body"></textarea>
+      <!-- Kaizen impact -->
+      <div class="modal-impact-wrap">
+        <div class="modal-impact-header">
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1,10 5,6 8,8 13,3"/>
+            <polyline points="10,3 13,3 13,6"/>
+          </svg>
+          <span>Kaizen</span>
+        </div>
+        <input id="modal-impact" class="modal-impact-input" type="text" placeholder="What improves? (e.g. &quot;build 5 min → 2 min&quot;)") maxlength="160" data-testid="input-card-impact" />
+      </div>
+
+      <!-- Subtasks section -->
+      <div class="modal-tasks">
+        <div class="modal-tasks-header">
+          <span class="modal-tasks-label">Subtasks</span>
+          <span id="modal-tasks-progress" class="modal-tasks-progress"></span>
+        </div>
+        <ul id="modal-tasks-list" class="modal-tasks-list"></ul>
+        <div class="modal-tasks-add">
+          <input id="modal-task-input" type="text" class="modal-task-new-input" placeholder="Add subtask… (Enter)" maxlength="200" data-testid="input-new-subtask" />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="modal-meta">
+          <label class="meta-label" for="modal-column">Column</label>
+          <select id="modal-column" class="meta-select" data-testid="select-card-column">
+            <option value="idea">Idea</option>
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="done">Done</option>
+          </select>
+          <label class="meta-label" for="modal-priority">Priority</label>
+          <select id="modal-priority" class="meta-select" data-testid="select-card-priority">
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+            <option value="low">Low</option>
+          </select>
+          <label class="meta-label" for="modal-deadline">Deadline</label>
+          <input id="modal-deadline" class="meta-input" type="date" data-testid="input-card-deadline" />
+          <label class="meta-label">Tags</label>
+          <div class="modal-tags-wrap" id="modal-tags-wrap">
+            <div class="modal-tags-list" id="modal-tags-list"></div>
+            <input id="modal-tag-input" class="modal-tag-input" type="text" placeholder="tag… Enter" maxlength="32" data-testid="input-card-tag" autocomplete="off" />
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="modal-delete" class="btn btn-danger" type="button" data-testid="button-delete-card">Delete</button>
+          <button id="modal-save" class="btn btn-primary" type="button" data-testid="button-save-card">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick-add toast -->
+  <div class="quick-add" id="quick-add" aria-hidden="true">
+    <input id="quick-add-input" type="text" placeholder="Card title… (Enter to save, Esc to cancel)" maxlength="120" data-testid="input-quick-add"/>
+  </div>
+
+
+  <!-- Archive overlay -->
+  <div class="archive-overlay" id="archive-overlay" aria-hidden="true">
+    <div class="archive-panel" role="dialog" aria-modal="true" aria-label="Archive">
+      <div class="archive-header">
+        <div class="archive-title-row">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="14" height="10" rx="1.5"/>
+            <path d="M1 7h14"/>
+            <path d="M5 2h6"/>
+            <line x1="6" y1="10.5" x2="10" y2="10.5"/>
+          </svg>
+          <h2 class="archive-title">Archive</h2>
+          <span class="archive-count" id="archive-count"></span>
+        </div>
+        <button class="btn-icon archive-close" id="archive-close" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </button>
+      </div>
+      <div class="archive-filters">
+        <div class="archive-search-wrap">
+          <svg class="archive-search-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <circle cx="6.5" cy="6.5" r="4"/>
+            <line x1="9.5" y1="9.5" x2="14" y2="14"/>
+          </svg>
+          <input id="archive-search" class="archive-search-input" type="text" placeholder="Search by title, tags, kaizen…" autocomplete="off" />
+        </div>
+        <div class="archive-date-range">
+          <label class="archive-date-label">From</label>
+          <input id="archive-date-from" class="archive-date-input" type="date" />
+          <label class="archive-date-label">to</label>
+          <input id="archive-date-to" class="archive-date-input" type="date" />
+          <button class="archive-reset-btn" id="archive-reset-filters" title="Reset filters">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2 7a5 5 0 1 0 1-3"/>
+              <polyline points="1,1 1,4.5 4.5,4.5"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="archive-list" id="archive-list"></div>
+    </div>
+  </div>
+
+  <!-- Retro panel -->
+  <div class="retro-overlay" id="retro-overlay" aria-hidden="true">
+    <div class="retro-panel" role="dialog" aria-modal="true" aria-label="Retrospective">
+      <div class="retro-header">
+        <div class="retro-title-row">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="2,12 6,8 9,10 14,4"/><polyline points="11,4 14,4 14,7"/>
+          </svg>
+          <h2 class="retro-title">Retrospective</h2>
+        </div>
+        <button class="btn-icon retro-close" id="retro-close" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </button>
+      </div>
+      <div class="retro-stats" id="retro-stats"></div>
+      <div class="retro-list" id="retro-list"></div>
+    </div>
+  </div>
+  <!-- Settings overlay -->
+  <div class="settings-overlay" id="settings-overlay" aria-hidden="true">
+    <div class="settings-panel" role="dialog" aria-modal="true" aria-label="Settings">
+      <div class="settings-header">
+        <svg class="settings-logo" viewBox="0 0 28 28" fill="none" aria-label="Kaizen Board" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="10" height="10" rx="2" fill="var(--col-idea)"/>
+          <rect x="16" y="2" width="10" height="10" rx="2" fill="var(--col-todo)"/>
+          <rect x="2" y="16" width="10" height="10" rx="2" fill="var(--col-done)"/>
+          <rect x="16" y="16" width="10" height="10" rx="2" fill="var(--text-faint)" opacity="0.4"/>
+        </svg>
+        <button class="btn-icon settings-close" id="settings-close" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
+        </button>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Appearance</div>
+        <div class="settings-theme-row">
+          <button class="settings-theme-btn" id="settings-theme-dark" data-theme="dark">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17.5 10.9A8 8 0 1 1 9 2.5a6 6 0 0 0 8.5 8.4z"/></svg>
+            <span>Dark</span>
+          </button>
+          <button class="settings-theme-btn" id="settings-theme-light" data-theme="light">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <span>Light</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-section settings-section--electron" id="settings-section-electron">
+        <div class="settings-section-title">System</div>
+        <label class="settings-toggle-row" id="settings-autolaunch-row">
+          <span class="settings-toggle-label">Launch at Login</span>
+          <span class="settings-toggle-desc">Start Kaizen Board when macOS boots</span>
+          <div class="settings-toggle" id="settings-autolaunch-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+        </label>
+        <div class="settings-divider"></div>
+        <button class="settings-danger-btn" id="settings-reset-data">Reset all data…</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
