@@ -24,22 +24,44 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # ── Code signing ──────────────────────────────────────────────────────────
-      - name: Decode signing certificate
-        env:
-          CSC_CONTENT: ${{ secrets.CSC_CONTENT }}
+      # ── Detect whether signing secrets are present ────────────────────────────
+      - name: Check signing secrets
+        id: signing
         run: |
-          echo "$CSC_CONTENT" | base64 --decode > /tmp/certificate.p12
+          if [ -n "$CSC_CONTENT_RAW" ] && [ -n "$CSC_KEY_PASSWORD_RAW" ]; then
+            echo "available=true" >> $GITHUB_OUTPUT
+          else
+            echo "available=false" >> $GITHUB_OUTPUT
+          fi
+        env:
+          CSC_CONTENT_RAW: ${{ secrets.CSC_CONTENT }}
+          CSC_KEY_PASSWORD_RAW: ${{ secrets.CSC_KEY_PASSWORD }}
+
+      # ── Decode certificate (only when signing is available) ───────────────────
+      - name: Decode signing certificate
+        if: steps.signing.outputs.available == 'true'
+        run: |
+          echo "${{ secrets.CSC_CONTENT }}" | base64 --decode > /tmp/certificate.p12
           echo "CSC_LINK=/tmp/certificate.p12" >> $GITHUB_ENV
 
-      # ── Build, sign, notarize ─────────────────────────────────────────────────
-      - name: Build, sign and notarize DMG
+      # ── Build signed + notarized ──────────────────────────────────────────────
+      - name: Build signed DMG
+        if: steps.signing.outputs.available == 'true'
         env:
           CSC_LINK: ${{ env.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx electron-builder --mac --universal --publish never
+
+      # ── Build unsigned (no secrets set) ───────────────────────────────────────
+      - name: Build unsigned DMG
+        if: steps.signing.outputs.available == 'false'
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+          SKIP_NOTARIZE: "true"
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx electron-builder --mac --universal --publish never
 
