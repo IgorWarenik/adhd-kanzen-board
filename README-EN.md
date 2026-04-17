@@ -5,7 +5,7 @@
 ![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-latest-47848F?logo=electron&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Build](https://github.com/IgorWarenik/adhd-kanzen-board/actions/workflows/build.yml/badge.svg)
+![Build](https://github.com/IgorWarenik/kanzen-board/actions/workflows/build.yml/badge.svg)
 
 Also available in: [Русский](README-RU.md)
 
@@ -95,7 +95,7 @@ Subtasks with a live progress bar make large, paralyzing cards manageable: break
 
 ### Download (recommended)
 
-Download the latest `.dmg` from the [Releases](https://github.com/IgorWarenik/adhd-kanzen-board/releases) page, open it, drag **Kanzen Board.app** to Applications.
+Download the latest `.dmg` from the [Releases](https://github.com/IgorWarenik/kanzen-board/releases) page, open it, drag **Kanzen Board.app** to Applications.
 
 > **Note: the app is currently unsigned.**
 > The developer does not have a paid Apple Developer account ($99/year), so the DMG is built without a code signing certificate. macOS Gatekeeper will show a warning on first launch.
@@ -113,8 +113,8 @@ Download the latest `.dmg` from the [Releases](https://github.com/IgorWarenik/ad
 ## Development
 
 ```bash
-git clone https://github.com/IgorWarenik/adhd-kanzen-board.git
-cd adhd-kanzen-board
+git clone https://github.com/IgorWarenik/kanzen-board.git
+cd kanzen-board
 npm install
 npm start
 ```
@@ -138,7 +138,7 @@ git push origin v1.0.1
 
 ## Contributing
 
-Bug reports and feature requests are welcome via [GitHub Issues](https://github.com/IgorWarenik/adhd-kanzen-board/issues).
+Bug reports and feature requests are welcome via [GitHub Issues](https://github.com/IgorWarenik/kanzen-board/issues).
 
 ---
 

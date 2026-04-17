@@ -5,7 +5,7 @@
 ![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-latest-47848F?logo=electron&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Build](https://github.com/IgorWarenik/adhd-kanzen-board/actions/workflows/build.yml/badge.svg)
+![Build](https://github.com/IgorWarenik/kanzen-board/actions/workflows/build.yml/badge.svg)
 
 Также доступно на: [English](README-EN.md)
 
@@ -95,7 +95,7 @@
 
 ### Скачать (рекомендуется)
 
-Скачай последний `.dmg` на странице [Releases](https://github.com/IgorWarenik/adhd-kanzen-board/releases), открой его и перетащи **Kanzen Board.app** в папку Applications.
+Скачай последний `.dmg` на странице [Releases](https://github.com/IgorWarenik/kanzen-board/releases), открой его и перетащи **Kanzen Board.app** в папку Applications.
 
 > **Важно: приложение не подписано.**
 > У разработчика нет платного аккаунта Apple Developer ($99/год), поэтому DMG собирается без сертификата подписи кода. При первом запуске macOS Gatekeeper покажет предупреждение.
@@ -113,8 +113,8 @@
 ## Разработка
 
 ```bash
-git clone https://github.com/IgorWarenik/adhd-kanzen-board.git
-cd adhd-kanzen-board
+git clone https://github.com/IgorWarenik/kanzen-board.git
+cd kanzen-board
 npm install
 npm start
 ```
@@ -138,7 +138,7 @@ git push origin v1.0.1
 
 ## Участие в проекте
 
-Сообщения об ошибках и запросы функций принимаются через [GitHub Issues](https://github.com/IgorWarenik/adhd-kanzen-board/issues).
+Сообщения об ошибках и запросы функций принимаются через [GitHub Issues](https://github.com/IgorWarenik/kanzen-board/issues).
 
 ---
 
