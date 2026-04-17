@@ -1,0 +1,6 @@
+node_modules
+dist
+build
+main.js
+preload.js
+scripts
