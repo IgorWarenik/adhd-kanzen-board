@@ -1,6 +1,6 @@
 # Kanzen Board
 
-> Minimalist macOS task board for ADHD brains — Kanban + Kaizen.
+> Minimalist macOS task board for ADHD brains — Kanban + Kaizen.Demo https://kanzen-board.vercel.app/
 
 ![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-latest-47848F?logo=electron&logoColor=white)
