@@ -7,6 +7,8 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Build](https://github.com/IgorWarenik/kaizen-board/actions/workflows/build.yml/badge.svg)
 
+![Kaizen Board — board overview](docs/assets/board.png)
+
 ---
 
 ## What is Kaizen Board?
@@ -44,11 +46,15 @@ Every card has an **Impact** field: a short answer to "why does this matter?". C
 ### Subtasks with a live progress bar
 Break any card into subtasks with individual checkboxes. A progress bar on the card face updates in real time. When all subtasks are checked, the card moves to Done automatically and a macOS notification fires.
 
+![Subtask progress and auto-move to Done](docs/assets/subtasks.gif)
+
 ### Deadline awareness
 Set a deadline on any card. The badge changes colour as the date approaches — **grey → yellow → red blinking** — and overdue cards pulse with a red outline. Cards with a deadline today get a purple highlight and auto-expand their column if it was collapsed.
 
 ### Pomodoro timer
 Start a 25-minute focus session directly from a card. A macOS notification fires when the session ends, then a 5-minute break begins automatically.
+
+![Pomodoro timer](docs/assets/pomodoro.gif)
 
 ### Full-text search
 One click on the magnifier in the toolbar dims everything except matching cards. Search covers titles, body text, tags, and impact notes across all active columns.
