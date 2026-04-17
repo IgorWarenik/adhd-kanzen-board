@@ -167,11 +167,7 @@ input, textarea, select { font: inherit; color: inherit; }
   -webkit-app-region: no-drag;
 }
 
-.logo {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
+
 
 .app-name {
   font-size: var(--text-base);
@@ -2307,11 +2303,7 @@ input, textarea, select { font: inherit; color: inherit; }
   padding: 12px 14px 12px 16px;
   border-bottom: 1px solid var(--border-subtle);
 }
-.settings-logo {
-  width: 22px;
-  height: 22px;
-  flex-shrink: 0;
-}
+
 
 /* Section */
 .settings-section {
