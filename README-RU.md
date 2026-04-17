@@ -1,6 +1,6 @@
 # Kanzen Board
 
-> Минималистичная macOS-доска для задач, построенная под то, как на самом деле работает мозг с ADHD — а не так, как думают гуру продуктивности.
+> Минималистичная macOS-доска для задач, построенная под то, как на самом деле работает мозг с ADHD — а не так, как думают гуру продуктивности. Веб-демо https://kanzen-board.vercel.app/
 
 ![macOS](https://img.shields.io/badge/macOS-12%2B-black?logo=apple&logoColor=white)
 ![Electron](https://img.shields.io/badge/Electron-latest-47848F?logo=electron&logoColor=white)
